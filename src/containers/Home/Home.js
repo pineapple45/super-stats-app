@@ -1,68 +1,139 @@
-import React, {Component} from 'react';
+import React, {Component } from 'react';
 import SuperheroList from '../../components/SuperheroList/SuperheroList';
+import Superhero from '../../components/SuperheroList/Superhero/Superhero';
+import Spinner from '../../UI/Spinner/Spinner';
+import Modal from '../../UI/Modal/Modal';
+import Button from '../../UI/Button/Button';
 import './Home.css';
+require('dotenv').config();
+
+
 
 class Home extends Component{
 
     state = {
         superheroData: null,
+        superheroDetails: null,
         superheroLastId: 1,
+        superheroName: '',
+        showDetails: false
     }
 
     componentDidMount(){
-        const API_KEY = 610683779792139;
-        const storageArray = [];
-        
-        
-        // let url =  `https://www.superheroapi.com/api.php/${API_KEY}/search/${SUP_ID}`;
+        this.loadSuperheroList();
+    }
+
+    loadSuperheroList = () =>{
+        if(this.state.superheroData !== null){
+            this.setState({superheroData: null});
+        }
+
+        const API_KEY = process.env.REACT_APP_API_KEY;
 
         const promises = Promise.all([
-            fetch(`https://www.superheroapi.com/api.php/${API_KEY}/${this.state.superheroLastId}`),
-            fetch(`https://www.superheroapi.com/api.php/${API_KEY}/${this.state.superheroLastId + 1}`),
-            fetch(`https://www.superheroapi.com/api.php/${API_KEY}/${this.state.superheroLastId + 2}`),
-            fetch(`https://www.superheroapi.com/api.php/${API_KEY}/${this.state.superheroLastId + 3}`),
-            fetch(`https://www.superheroapi.com/api.php/${API_KEY}/${this.state.superheroLastId + 4}`),
+            fetch(`https://www.superheroapi.com/api.php/${API_KEY}/${this.state.superheroLastId < 731? this.state.superheroLastId + 0: this.setState({superheroLastId: 1})}`),
+            fetch(`https://www.superheroapi.com/api.php/${API_KEY}/${this.state.superheroLastId < 731? this.state.superheroLastId + 1: this.setState({superheroLastId: 1})}`),
+            fetch(`https://www.superheroapi.com/api.php/${API_KEY}/${this.state.superheroLastId < 731? this.state.superheroLastId + 2: this.setState({superheroLastId: 1})}`),
+            fetch(`https://www.superheroapi.com/api.php/${API_KEY}/${this.state.superheroLastId < 731? this.state.superheroLastId + 3: this.setState({superheroLastId: 1})}`),
+            fetch(`https://www.superheroapi.com/api.php/${API_KEY}/${this.state.superheroLastId < 731? this.state.superheroLastId + 4: this.setState({superheroLastId: 1})}`),
           ]);
 
-          promises
-            .then((results) => 
+          promises.then((results) => 
                 Promise.all(results.map(r => r.json()))
             )
             .then(results => {
                 // console.log(results);
                 this.setState(prevState => ({superheroData:results, superheroLastId: prevState.superheroLastId + 5}));
                 // console.log(this.state.superheroLastId);
+                window.scroll({
+                    top:0,
+                    left:0,
+                    behavior:"smooth"
+                })
+            }).catch(err =>{
+                console.log(err);
             })
+    }
 
+    inputHandler = (e) => {
+        let name = e.target.value;
+        this.setState({superheroName: name});
+    }
 
+    submitHandler = (e) => {
+        e.preventDefault();
 
-        
+        this.setState({superheroData: null});
 
-        // fetch(url).then(response =>{
-        //     response.json().then(data => {
-        //         console.log(data);
-        //     })
-        //     .catch(err => console.log(err));
-        // }).catch(err => console.log(err))
+        const API_KEY = process.env.REACT_APP_API_KEY;
 
+        const url = `https://www.superheroapi.com/api.php/${API_KEY}/search/${this.state.superheroName}`;
+        fetch(url).then(response =>{
+            response.json().then(data =>{
+                // console.log(data.results)
+                this.setState({superheroData: data.results , superheroLastId: 1,superheroName: ""});
+            }).catch(err =>{
+                console.log(err);
+            })
+        }).catch(err =>{
+            console.log(err);
+        })
+    }
+
+    cardClickHandler = (e) => {
+
+        for(let i = 0; i<this.state.superheroData.length; i++){
+            if(this.state.superheroData[i].id === e.target.id){
+             this.setState({superheroDetails: this.state.superheroData[i], showDetails:true});           
+            }
+        }
+
+        window.scroll({
+            top:0,
+            left:0,
+            behavior:"smooth"
+        })
+        // console.log(this.state.superheroData[e.target.id-1]);
+        // this.setState({superheroDetails: this.state.superheroData[e.target.id-1]});
+    }
+
+    modalCloseHandler = () => {
+        this.setState({superheroDetails:null, showDetails:false});
     }
 
     render(){
-        // console.log(this.state.superheroData);
-        let superheroList = <h1>Loading...</h1>
-        if(this.state.superheroData !== null ){
-            superheroList = <SuperheroList superheroData = {this.state.superheroData}/>
+        let superheroList = "";
+        let superhero = "";
+        if(this.state.superheroData === undefined){
+            superheroList = <h1 style={{color:'white', backgroundColor:"rgba(0,0,0,0.5)"}}>Superhero data not present!</h1>
         }
+        else if(this.state.superheroData !== null ){
+            superheroList = <SuperheroList superheroData = {this.state.superheroData} cardClick = {this.cardClickHandler}/>
+        }
+
+        if(this.state.superheroDetails !== null){
+            superhero = <Superhero details={this.state.superheroDetails}/>
+        }
+
         return(
+            <React.Fragment>
             <div className={'Home'}>
-                <h1>superhero API</h1>
+                <h1><a href="https://superheroapi.com/">Super-stats</a></h1>
                 <form>
-                    <input id='superhero-name' name='superhero-name' placeholder='Enter superhero name'/>
-                    <button type='submit'>submit</button>
+                    <input onChange={(e) => this.inputHandler(e)} value={this.state.superheroName} id='superhero-name' name='superhero-name' placeholder='Enter superhero name' autoComplete="off"/>
+                    <button type='submit' onClick={(e) => this.submitHandler(e)}>Go</button>
                 </form>
-                <p>Random search</p>
                 {superheroList}
             </div>
+            {/* <button onClick={this.loadSuperheroList} className="LoadButton">Load New</button> */}
+            <Button clicked={this.loadSuperheroList} loading={this.state.superheroData === null? true:false}/>
+            <p className="Reference">Background Image reference: <a href="https://picserio.com/data/out/434/hd-comic-book-wallpaper_6370133.jpg">Link</a></p>
+            <br/>
+            <Modal show={this.state.showDetails} modalClosed={this.modalCloseHandler}>
+                    {superhero}
+            </Modal>
+            {/* {this.state.superheroDetails === null ? <h1>Loading details...</h1> : <Superhero details={this.state.superheroDetails}/>} */}
+            </React.Fragment>
         )
     }
 }

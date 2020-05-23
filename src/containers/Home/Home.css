@@ -1,3 +1,99 @@
 .Home{
-text-align: center;
+    text-align: center;
+}
+
+.Reference{
+    display: inline-block;
+    color:"white";
+    margin-left:"20px";
+    font-weight: 'bold';
+    background-color: rgb(0, 0, 0, 0.8);
+    border-radius: 5px;
+    color: #fff;
+    padding: 5px;
+    margin-left: 5px;
+    font-size: 13px;   
+}
+
+.Reference > a{
+    color: greenyellow;
+}
+
+.Home > h1{
+    /* font-size: 100%; */
+    background-color: rgba(0,0,0,0.5);
+    color: azure;
+    margin: 2rem auto;
+    border-radius: 10px;
+    width: 20rem;
+    padding: 0.5rem;
+
+}
+
+.Home > h1 > a{
+    color: #fff;
+    cursor: pointer;
+}
+
+.Home > form >input{
+    margin-bottom: 20px;
+    padding: 5px 10px;
+    font-size: 1.2rem;
+    border: 1px solid grey;
+    border-radius: 5px;
+    color: blueviolet;
+    outline: none;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.Home > form >input:focus{
+    border: 1.2px solid blueviolet;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.Home > form > button{
+    margin: 10px 10px;
+    padding: 10px 20px;
+    border-style: none;
+    border-radius: 3px;
+    cursor: pointer;
+    background-color: darkorange;
+    font-weight: bold;
+    color: cornsilk;
+
+}
+
+.Home > form > button:hover{
+    background-color: orangered;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.Home > form >button:focus{
+    outline: none;
+}
+
+.LoadButton{
+    padding: 10px 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-style: none;
+    background-color: darkorange;
+    color: cornsilk;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: bold;
+    outline: none;
+}
+
+.LoadButton:hover{
+    background-color: orangered;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+
+@media (max-width: 600px){
+    .Home > h1{
+        font-size: 1.5rem;
+    }
 }
