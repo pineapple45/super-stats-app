@@ -1,8 +1,8 @@
 import React from 'react';
 import './Spinner.css';
 
-const spinner = () => (
-<div className="loader">Loading...</div>
+const Spinner = () => (
+<div className="loader">Click To Load More</div>
 )
 
-export default spinner;
+export default Spinner;
