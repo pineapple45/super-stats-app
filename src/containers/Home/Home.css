@@ -20,18 +20,21 @@
 }
 
 .Home > h1{
-    /* font-size: 100%; */
-    background-color: rgba(0,0,0,0.5);
-    color: azure;
+    background-color: rgba(0, 0, 0, 0.651);
+    color: rgb(22, 24, 24);
     margin: 2rem auto;
-    border-radius: 10px;
-    width: 20rem;
+    border-radius: 20px;
+    width: 50rem;
     padding: 0.5rem;
 
 }
 
 .Home > h1 > a{
-    color: #fff;
+    color: rgb(174, 37, 192);
+    font-family: 'Permanent Marker';
+    text-shadow: 4px 4px 4px black;
+    font-weight: bold;
+    font-size: 5rem;
     cursor: pointer;
 }
 
@@ -41,9 +44,10 @@
     font-size: 1.2rem;
     border: 1px solid grey;
     border-radius: 5px;
-    color: blueviolet;
+    color: rgb(40, 15, 63);
     outline: none;
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Orbitron';
+    font-weight: bold;
 }
 
 .Home > form >input:focus{
@@ -96,4 +100,18 @@
     .Home > h1{
         font-size: 1.5rem;
     }
+}
+
+.load{
+    display:flex;
+    justify-content: center;
+    font-size: 2rem;
+    color: #ae25c0;
+    padding:1rem;
+    margin-right: 90px;
+    font: 60px"permanent marker";
+    text-shadow: 6px 6px 6px black;
+    margin-top: auto;
+    
+    
 }

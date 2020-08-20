@@ -1,7 +1,6 @@
 import React, {Component } from 'react';
 import SuperheroList from '../../components/SuperheroList/SuperheroList';
 import Superhero from '../../components/SuperheroList/Superhero/Superhero';
-import Spinner from '../../UI/Spinner/Spinner';
 import Modal from '../../UI/Modal/Modal';
 import Button from '../../UI/Button/Button';
 import './Home.css';
@@ -31,11 +30,11 @@ class Home extends Component{
         const API_KEY = process.env.REACT_APP_API_KEY;
 
         const promises = Promise.all([
-            fetch(`https://www.superheroapi.com/api.php/${API_KEY}/${this.state.superheroLastId < 731? this.state.superheroLastId + 0: this.setState({superheroLastId: 1})}`),
-            fetch(`https://www.superheroapi.com/api.php/${API_KEY}/${this.state.superheroLastId < 731? this.state.superheroLastId + 1: this.setState({superheroLastId: 1})}`),
-            fetch(`https://www.superheroapi.com/api.php/${API_KEY}/${this.state.superheroLastId < 731? this.state.superheroLastId + 2: this.setState({superheroLastId: 1})}`),
-            fetch(`https://www.superheroapi.com/api.php/${API_KEY}/${this.state.superheroLastId < 731? this.state.superheroLastId + 3: this.setState({superheroLastId: 1})}`),
-            fetch(`https://www.superheroapi.com/api.php/${API_KEY}/${this.state.superheroLastId < 731? this.state.superheroLastId + 4: this.setState({superheroLastId: 1})}`),
+            fetch(`https://www.superheroapi.com/api.php/${API_KEY}/${this.state.superheroLastId < 731? this.state.superheroLastId + 69: this.setState({superheroLastId: 1})}`),
+            fetch(`https://www.superheroapi.com/api.php/${API_KEY}/${this.state.superheroLastId < 731? this.state.superheroLastId + 619: this.setState({superheroLastId: 1})}`),
+            fetch(`https://www.superheroapi.com/api.php/${API_KEY}/${this.state.superheroLastId < 731? this.state.superheroLastId + 331: this.setState({superheroLastId: 1})}`),
+            fetch(`https://www.superheroapi.com/api.php/${API_KEY}/${this.state.superheroLastId < 731? this.state.superheroLastId + 148: this.setState({superheroLastId: 1})}`),
+            fetch(`https://www.superheroapi.com/api.php/${API_KEY}/${this.state.superheroLastId < 731? this.state.superheroLastId + 643: this.setState({superheroLastId: 1})}`),
           ]);
 
           promises.then((results) => 
@@ -118,16 +117,17 @@ class Home extends Component{
         return(
             <React.Fragment>
             <div className={'Home'}>
-                <h1><a href="https://superheroapi.com/">Super-stats</a></h1>
+                <h1><a href="https://superheroapi.com/">SuperHero-Finder</a></h1>
                 <form>
-                    <input onChange={(e) => this.inputHandler(e)} value={this.state.superheroName} id='superhero-name' name='superhero-name' placeholder='Enter superhero name' autoComplete="off"/>
+                    <input onChange={(e) => this.inputHandler(e)} value={this.state.superheroName} id='superhero-name' name='superhero-name' placeholder='Enter Superhero Name' autoComplete="off"/>
                     <button type='submit' onClick={(e) => this.submitHandler(e)}>Go</button>
                 </form>
                 {superheroList}
             </div>
             {/* <button onClick={this.loadSuperheroList} className="LoadButton">Load New</button> */}
+             <span className="load">Click To Load More</span>
             <Button clicked={this.loadSuperheroList} loading={this.state.superheroData === null? true:false}/>
-            <p className="Reference">Background Image reference: <a href="https://picserio.com/data/out/434/hd-comic-book-wallpaper_6370133.jpg">Link</a></p>
+           
             <br/>
             <Modal show={this.state.showDetails} modalClosed={this.modalCloseHandler}>
                     {superhero}
@@ -137,5 +137,7 @@ class Home extends Component{
         )
     }
 }
+
+
 
 export default Home;

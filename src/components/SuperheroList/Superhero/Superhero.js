@@ -6,11 +6,10 @@ const superHero = (props) => {
     return(
     <div className="Superhero">
         <h1>{props.details.name}</h1>
-        {/* <img src={props.details.image.url} alt={props.details.name} /> */}
+         <img src={props.details.image.url} alt={props.details.name} /> 
         <h2>Powerstats</h2>
         <div className="quality">
             {Object.entries(props.details.powerstats).map((entry,i) => {
-                {/* return <p className='Powerstats'>{entry[0]+' : '+entry[1]}</p> */}
                 if(entry[1] === 'null' || entry[1] === '-' || entry[1] === '') return <p>{entry[0]+' : [Data unavailable]'}</p>
 
                 return <div key={i}>
