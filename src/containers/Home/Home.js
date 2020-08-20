@@ -125,9 +125,9 @@ class Home extends Component{
                 {superheroList}
             </div>
             {/* <button onClick={this.loadSuperheroList} className="LoadButton">Load New</button> */}
-             <span className="load">Click To Load More</span>
+            <span className="load">Click Kapow Load More</span>
             <Button clicked={this.loadSuperheroList} loading={this.state.superheroData === null? true:false}/>
-           
+            
             <br/>
             <Modal show={this.state.showDetails} modalClosed={this.modalCloseHandler}>
                     {superhero}
